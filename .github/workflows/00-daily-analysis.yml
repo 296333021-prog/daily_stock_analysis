@@ -51,6 +51,7 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
+          npm i -g markdown-to-file  # ← 转图片
       
       - name: 创建必要目录
         run: |
@@ -64,6 +65,7 @@ jobs:
           ENABLE_CHIP_DISTRIBUTION: ${{ vars.ENABLE_CHIP_DISTRIBUTION || 'true' }}   # 是否启用筹码分布数据获取（A股专用）
           ENABLE_EASTMONEY_PATCH: ${{ vars.ENABLE_EASTMONEY_PATCH || 'true' }}       # 是否启用东方财富反爬补丁（筹码数据必需）
           STOCK_INDEX_REMOTE_UPDATE_ENABLED: ${{ vars.STOCK_INDEX_REMOTE_UPDATE_ENABLED || 'true' }}  # 是否远程更新股票指数列表
+          
           # ============================================
           # Agent多策略评估配置
           # ============================================
@@ -78,6 +80,9 @@ jobs:
           # 报告类型与展示配置
           # ==========================================
           REPORT_TYPE: ${{ vars.REPORT_TYPE || 'simple' }}                # 报告类型：simple简略 / complete完整
+          REPORT_LANGUAGE: ${{ vars.REPORT_LANGUAGE || 'zh' }}            # 报告语言：zh中文 / en英文
+          MD2IMG_ENGINE: ${{ vars.MD2IMG_ENGINE || 'wkhtmltoimage' }}     # Markdown转图片引擎：wkhtmltoimage默认 / markdown-to-file更好
+
           # ============================================
           # 技术分析阈值配置
           # ============================================
