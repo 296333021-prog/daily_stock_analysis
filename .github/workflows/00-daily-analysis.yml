@@ -58,6 +58,30 @@ jobs:
       
       - name: 执行股票分析
         env:
+          # ============================================
+          # 数据源与数据获取配置
+          # ============================================
+          ENABLE_CHIP_DISTRIBUTION: ${{ vars.ENABLE_CHIP_DISTRIBUTION || 'true' }}   # 是否启用筹码分布数据获取（A股专用）
+          ENABLE_EASTMONEY_PATCH: ${{ vars.ENABLE_EASTMONEY_PATCH || 'true' }}       # 是否启用东方财富反爬补丁（筹码数据必需）
+          STOCK_INDEX_REMOTE_UPDATE_ENABLED: ${{ vars.STOCK_INDEX_REMOTE_UPDATE_ENABLED || 'true' }}  # 是否远程更新股票指数列表
+          # ============================================
+          # Agent多策略评估配置
+          # ============================================
+          AGENT_MODE: ${{ vars.AGENT_MODE || 'true' }}                     # 是否启用Agent多策略智能评估模式
+          AGENT_SKILLS: ${{ vars.AGENT_SKILLS || 'all' }}                  # 启用的策略技能列表，all=全部启用，也可指定如bull_trend,volume_breakout等
+          # ============================================
+          # 新闻与事件驱动配置
+          # ============================================
+          NEWS_MAX_AGE_DAYS: ${{ vars.NEWS_MAX_AGE_DAYS || '3' }}          # 新闻最大有效天数，超过此天数的新闻将被忽略
+          NEWS_STRATEGY_PROFILE: ${{ vars.NEWS_STRATEGY_PROFILE || 'balanced' }}  # 新闻策略风险偏好：conservative(保守)/balanced(平衡)/aggressive(激进)
+         
+          # 报告类型与展示配置
+          # ==========================================
+          REPORT_TYPE: ${{ vars.REPORT_TYPE || 'simple' }}                # 报告类型：simple简略 / complete完整
+          # ============================================
+          # 技术分析阈值配置
+          # ============================================
+          BIAS_THRESHOLD: ${{ vars.BIAS_THRESHOLD || '5.0' }}              # 乖离率阈值(%)，用于判断股价偏离程度
           # ==========================================
           # AI 配置
           # ==========================================
