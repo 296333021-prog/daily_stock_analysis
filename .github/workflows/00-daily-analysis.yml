@@ -66,6 +66,9 @@ jobs:
           ENABLE_EASTMONEY_PATCH: ${{ vars.ENABLE_EASTMONEY_PATCH || 'true' }}       # 是否启用东方财富反爬补丁（筹码数据必需）
           STOCK_INDEX_REMOTE_UPDATE_ENABLED: ${{ vars.STOCK_INDEX_REMOTE_UPDATE_ENABLED || 'true' }}  # 是否远程更新股票指数列表
           # ==========================================
+          # 社交情绪分析（美股专用）
+          # ==========================================
+          SOCIAL_SENTIMENT_API_KEY: ${{ secrets.SOCIAL_SENTIMENT_API_KEY }}  # 社交情绪分析API（仅对美股有效，A股忽略）
           # 通知路由配置
           # ==========================================
           NOTIFICATION_REPORT_CHANNELS: ${{ vars.NOTIFICATION_REPORT_CHANNELS || '' }}  # 报告通知渠道：serverchan3=只推Server酱，留空=尝试所有已配置渠道
@@ -73,7 +76,7 @@ jobs:
           # ==========================================
           # 新闻与事件驱动配置
           # ==========================================
-          NEWS_STRATEGY_PROFILE: ${{ vars.NEWS_STRATEGY_PROFILE || 'short' }}  # 新闻策略窗口：conservative保守/balanced平衡/aggressive激进
+          NEWS_STRATEGY_PROFILE: ${{ vars.NEWS_STRATEGY_PROFILE || 'short' }}  # 新闻策略窗口：ultra_short(1天)/short(3天)/medium(7天)/long(30天)
           # ============================================
           # Agent多策略评估配置
           # ============================================
@@ -83,11 +86,10 @@ jobs:
           # 新闻与事件驱动配置
           # ============================================
           NEWS_MAX_AGE_DAYS: ${{ vars.NEWS_MAX_AGE_DAYS || '3' }}          # 新闻最大有效天数，超过此天数的新闻将被忽略
-          NEWS_STRATEGY_PROFILE: ${{ vars.NEWS_STRATEGY_PROFILE || 'balanced' }}  # 新闻策略风险偏好：conservative(保守)/balanced(平衡)/aggressive(激进)
          
           # 报告类型与展示配置
           # ==========================================
-          REPORT_TYPE: ${{ vars.REPORT_TYPE || 'simple' }}                # 报告类型：simple简略 / complete完整
+          REPORT_TYPE: ${{ vars.REPORT_TYPE || 'complete' }}                # 报告类型：simple简略 / complete完整
           REPORT_LANGUAGE: ${{ vars.REPORT_LANGUAGE || 'zh' }}            # 报告语言：zh中文 / en英文
           MD2IMG_ENGINE: ${{ vars.MD2IMG_ENGINE || 'wkhtmltoimage' }}     # Markdown转图片引擎：wkhtmltoimage默认 / markdown-to-file更好
 
@@ -371,7 +373,7 @@ jobs:
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
 
           # 通知路由策略（留空时保持全部已配置渠道）
-          NOTIFICATION_REPORT_CHANNELS: ${{ vars.NOTIFICATION_REPORT_CHANNELS || secrets.NOTIFICATION_REPORT_CHANNELS }}
+          # NOTIFICATION_REPORT_CHANNELS: ${{ vars.NOTIFICATION_REPORT_CHANNELS || secrets.NOTIFICATION_REPORT_CHANNELS }}
           NOTIFICATION_ALERT_CHANNELS: ${{ vars.NOTIFICATION_ALERT_CHANNELS || secrets.NOTIFICATION_ALERT_CHANNELS }}
           NOTIFICATION_SYSTEM_ERROR_CHANNELS: ${{ vars.NOTIFICATION_SYSTEM_ERROR_CHANNELS || secrets.NOTIFICATION_SYSTEM_ERROR_CHANNELS }}
           NOTIFICATION_DEDUP_TTL_SECONDS: ${{ vars.NOTIFICATION_DEDUP_TTL_SECONDS || secrets.NOTIFICATION_DEDUP_TTL_SECONDS || '0' }}
@@ -391,7 +393,6 @@ jobs:
           # ==========================================
           # 运行配置 ⬅️ 新增！
           # ==========================================
-          REPORT_TYPE: ${{ vars.REPORT_TYPE || secrets.REPORT_TYPE || 'simple' }}
           REPORT_LANGUAGE: ${{ vars.REPORT_LANGUAGE || secrets.REPORT_LANGUAGE || '' }}
           REPORT_SHOW_LLM_MODEL: ${{ vars.REPORT_SHOW_LLM_MODEL || secrets.REPORT_SHOW_LLM_MODEL || 'true' }}
           SINGLE_STOCK_NOTIFY: ${{ vars.SINGLE_STOCK_NOTIFY || secrets.SINGLE_STOCK_NOTIFY || 'false' }}
