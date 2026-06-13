@@ -65,7 +65,15 @@ jobs:
           ENABLE_CHIP_DISTRIBUTION: ${{ vars.ENABLE_CHIP_DISTRIBUTION || 'true' }}   # 是否启用筹码分布数据获取（A股专用）
           ENABLE_EASTMONEY_PATCH: ${{ vars.ENABLE_EASTMONEY_PATCH || 'true' }}       # 是否启用东方财富反爬补丁（筹码数据必需）
           STOCK_INDEX_REMOTE_UPDATE_ENABLED: ${{ vars.STOCK_INDEX_REMOTE_UPDATE_ENABLED || 'true' }}  # 是否远程更新股票指数列表
-          
+          # ==========================================
+          # 通知路由配置
+          # ==========================================
+          NOTIFICATION_REPORT_CHANNELS: ${{ vars.NOTIFICATION_REPORT_CHANNELS || '' }}  # 报告通知渠道：serverchan3=只推Server酱，留空=尝试所有已配置渠道
+
+          # ==========================================
+          # 新闻与事件驱动配置
+          # ==========================================
+          NEWS_STRATEGY_PROFILE: ${{ vars.NEWS_STRATEGY_PROFILE || 'short' }}  # 新闻策略窗口：conservative保守/balanced平衡/aggressive激进
           # ============================================
           # Agent多策略评估配置
           # ============================================
